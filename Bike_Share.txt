@@ -1,0 +1,14 @@
+WITH Cte_main as 
+( 
+Select * from bike_share_yr_0 
+union all
+Select * 
+From bike_share_yr_1 )
+ 
+select dteday, season, t1.yr, weekday, hr, rider_type,
+ riders, price, COGS, 
+ round(riders*price, 2) as revenue,
+ round(riders*price-COGS, 2) as profit
+from Cte_main t1
+left join cost_table t2
+on t1.yr = t2.yr
